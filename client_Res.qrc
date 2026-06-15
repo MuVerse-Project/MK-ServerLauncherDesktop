@@ -1,0 +1,11 @@
+<RCC>
+  <qresource prefix="/">
+    <file>res/FuckPipes.jpg</file>
+    <file>res/Mu.png</file>
+    <file>res/Copyright_He.png</file>
+    <file>res/JetBrainsMono-Medium.ttf</file>
+    <file>res/BG_CS_S1Final_81.jpg</file>
+    <file>res/qing.png</file>
+    <file>res/SarasaMonoSC-SemiBold.ttf</file>
+  </qresource>
+</RCC>

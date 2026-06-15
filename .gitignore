@@ -1,0 +1,94 @@
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+/gradlew
+/gradlew.bat
+
+### MK-ServerLauncher Running ###
+/config/
+/server/
+/plugins/
+
+
+### IntelliJ IDEA ###
+/.idea/
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### Kotlin ###
+.kotlin
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+### MuTest ###
+/MuTest/
+
+
+### CodeManStudio ###
+out/
+build/
+*-build/
+debug/
+release/
+*.user
+*.user.*
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+CMakeUserPresets.json 
+
+*.moc
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+ui_*.h
+*.autosave
+
+.vs/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.vcxproj.user.*
+
+
+*.exe
+*.exe.manifest
+*.dll
+*.lib
+*.pdb
+*.ilk
+*.exp
+
+*.log
+spdlog.log
