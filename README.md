@@ -77,4 +77,5 @@ MK-ServerLauncherDesktop\CodeManStudio\Desktop\src\main.cpp
 - spdlog (any version)
 ~~~ bash
 vcpkg install spdlog
+vcpkg install cryptopp:x64-windows
 ~~~
