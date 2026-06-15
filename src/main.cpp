@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
     //初始化Qt应用程序
     QApplication app(argc, argv);
 
-
+    spdlog::set_pattern("[%H:%M:%S][%^%l%$][%n]: %v");
     //使用spdlog的彩色控制台输出，日志器名称为"main"
     const auto serverLogger = spdlog::stdout_color_mt("server");
     const auto clientLogger = spdlog::stdout_color_mt("client");
@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
 
     app.setApplicationName("MK-ServerLauncher Desktop");
     app.setOrganizationName("MuVerse / CodeManStudio");
-    app.setApplicationVersion("0.0.1-Demo");
+    app.setApplicationVersion("26.1.0-beta");
 
     //创建主窗口实例，传入日志器
     //父窗口为nullptr，表示这是一个顶级窗口
