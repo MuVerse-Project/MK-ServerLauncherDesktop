@@ -41,6 +41,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 find_package(spdlog REQUIRED CONFIG)
+find_package(cryptopp REQUIRED CONFIG)
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets WebSockets)
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR})
 qt6_add_executable(${PROJECT_NAME}
@@ -52,6 +53,7 @@ qt6_add_executable(${PROJECT_NAME}
         src/WebSocketManager.cpp
         Dark/darkstyle.qrc
         client_Res.qrc
+        src/Hasher.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
@@ -59,6 +61,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         Qt6::Widgets
         Qt6::WebSockets
         spdlog::spdlog
+        cryptopp::cryptopp
         CMSUtils
         yaml-cpp
 )
