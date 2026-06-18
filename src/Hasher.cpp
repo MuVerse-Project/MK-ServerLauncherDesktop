@@ -1,5 +1,7 @@
 #include "Hasher.hpp"
-std::string Hex_CCRC32(const std::string &Text)
+
+
+std::string CMS::Hex_CCRC32(const std::string& Text)
 {
     CryptoPP::CRC32 crc;
     std::string digest;
@@ -10,7 +12,7 @@ std::string Hex_CCRC32(const std::string &Text)
                 )));
     return digest;
 }
-std::vector<CryptoPP::byte> Bin_CCRC32(const std::string &Text)
+std::vector<CryptoPP::byte> CMS::Bin_CCRC32(const std::string &Text)
 {
     CryptoPP::CRC32 crc;
     std::vector<CryptoPP::byte> digest;
@@ -20,7 +22,7 @@ std::vector<CryptoPP::byte> Bin_CCRC32(const std::string &Text)
         ));
     return digest;
 }
-std::string Hex_CSM3(const std::string &Text)
+std::string CMS::Hex_CSM3(const std::string &Text)
 {
     CryptoPP::SM3 sm;
     std::string digest;
@@ -31,7 +33,7 @@ std::string Hex_CSM3(const std::string &Text)
                 )));
     return digest;
 }
-std::vector<CryptoPP::byte> Bin_CSM3(const std::string &Text)
+std::vector<CryptoPP::byte> CMS::Bin_CSM3(const std::string &Text)
 {
     CryptoPP::SM3 sm;
     std::vector<CryptoPP::byte> digest;

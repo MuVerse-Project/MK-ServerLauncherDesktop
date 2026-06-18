@@ -54,6 +54,8 @@ qt6_add_executable(${PROJECT_NAME}
         Dark/darkstyle.qrc
         client_Res.qrc
         src/Hasher.cpp
+        src/FileGuy.cpp
+        src/FileGuy.hpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
