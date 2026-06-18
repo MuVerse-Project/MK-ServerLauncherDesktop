@@ -20,4 +20,25 @@ std::vector<CryptoPP::byte> Bin_CCRC32(const std::string &Text)
         ));
     return digest;
 }
+std::string Hex_CSM3(const std::string &Text)
+{
+    CryptoPP::SM3 sm;
+    std::string digest;
+    CryptoPP::StringSource(Text, true,
+        new CryptoPP::HashFilter(sm,
+            new CryptoPP::HexEncoder(
+                new CryptoPP::StringSink(digest),false
+                )));
+    return digest;
+}
+std::vector<CryptoPP::byte> Bin_CSM3(const std::string &Text)
+{
+    CryptoPP::SM3 sm;
+    std::vector<CryptoPP::byte> digest;
+    CryptoPP::StringSource(Text, true,
+        new CryptoPP::HashFilter(sm,
+            new CryptoPP::VectorSink(digest)
+        ));
+    return digest;
+}
 

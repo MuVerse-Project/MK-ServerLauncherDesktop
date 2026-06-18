@@ -15,6 +15,7 @@
 #include <QApplication>
 #include "MainWindow.hpp"
 #include "spdlog/sinks/stdout_color_sinks.h"
+#include "spdlog/sinks/rotating_file_sink.h"
 #include "WebSocketManager.hpp"
 #include <yaml-cpp/yaml.h>
 /**
@@ -33,11 +34,18 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     spdlog::set_pattern("[%H:%M:%S][%^%l%$][%n]: %v");
+    const auto file_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
+    "logs/app.log",          // 基础文件名
+    1024 * 1024 * 10,        // 单个文件最大 10MB
+    3                        // 保留 3 个文件
+);
     //使用spdlog的彩色控制台输出，日志器名称为"main"
     const auto serverLogger = spdlog::stdout_color_mt("server");
     const auto clientLogger = spdlog::stdout_color_mt("client");
     const auto MainLogger = spdlog::stdout_color_mt("main");
-
+    serverLogger->sinks().push_back(file_sink);
+    clientLogger->sinks().push_back(file_sink);
+    MainLogger->sinks().push_back(file_sink);
     app.setApplicationName("MK-ServerLauncher Desktop");
     app.setOrganizationName("MuVerse / CodeManStudio");
     app.setApplicationVersion("26.1.0-beta");
