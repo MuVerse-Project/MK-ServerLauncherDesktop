@@ -12,11 +12,13 @@
 
 #include <iostream>
 #include <cms_toolkit_dll.hpp>
+#include <filesystem>
 #include <QApplication>
 #include "MainWindow.hpp"
 #include "spdlog/sinks/stdout_color_sinks.h"
+#include "spdlog/sinks/rotating_file_sink.h"
 #include "WebSocketManager.hpp"
-#include <yaml-cpp/yaml.h>
+#include "FileGuy.hpp"
 /**
  * @brief 应用程序入口点
  *
@@ -26,21 +28,32 @@
 int main(int argc, char* argv[])
 {
 
-    //TODO(Hzj) : File read
+
 
 
     //初始化Qt应用程序
     QApplication app(argc, argv);
 
     spdlog::set_pattern("[%H:%M:%S][%^%l%$][%n]: %v");
+
     //使用spdlog的彩色控制台输出，日志器名称为"main"
     const auto serverLogger = spdlog::stdout_color_mt("server");
     const auto clientLogger = spdlog::stdout_color_mt("client");
     const auto MainLogger = spdlog::stdout_color_mt("main");
-
+    const std::filesystem::path ExeDir=std::filesystem::path(argv[0]).parent_path();
+    CMS::FileManager FileGay(MainLogger,ExeDir);
+    const auto file_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
+        FileGay.GetLogFilePath().string(),
+        1024 * 1024 * 10,
+        3
+        );
+    serverLogger->sinks().push_back(file_sink);
+    clientLogger->sinks().push_back(file_sink);
+    MainLogger->sinks().push_back(file_sink);
     app.setApplicationName("MK-ServerLauncher Desktop");
     app.setOrganizationName("MuVerse / CodeManStudio");
     app.setApplicationVersion("26.1.0-beta");
+
 
     //创建主窗口实例，传入日志器
     //父窗口为nullptr，表示这是一个顶级窗口
