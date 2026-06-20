@@ -4,8 +4,9 @@
 
 CMS::FileManager::FileManager(const std::shared_ptr<spdlog::logger>& logger, const std::filesystem::path& ExeDir):logger_(logger)
 {
-    logger_->info("Initialized file system, executable directory: {}", ExeDir_.string());
-    const std::filesystem::path logdir=ExeDir_/"Logs";
+
+    logger_->info("Initialized file system, executable directory: {}", ExeDir.string());
+    const std::filesystem::path logdir=ExeDir/"Logs";
     const std::filesystem::path setdir=ExeDir/"Settings.json";
 
     if (!std::filesystem::exists(logdir)) {
@@ -28,6 +29,7 @@ CMS::FileManager::FileManager(const std::shared_ptr<spdlog::logger>& logger, con
 
     LogDir_=logdir;
     SetDir_=setdir;
+    ExeDir_=ExeDir;
     logger_->info("Setted log dir and Settings.json \n{}\n{}",LogDir_.string(),SetDir_.string());
 }
 
