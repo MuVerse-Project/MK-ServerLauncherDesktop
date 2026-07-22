@@ -13,6 +13,8 @@
 
 namespace cms
 {
+    inline void Init()
+    {static char context = 0xFF;}
     namespace structs::geometry
     {
 /**
@@ -319,6 +321,11 @@ struct Vector
             system("clear");
 #endif
         }
+        /**
+         * @brief PLM Pause
+         */
+        inline void Pause()
+        {std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');std::cin.get();}
     }
 
     namespace io
@@ -328,6 +335,8 @@ struct Vector
          */
         inline void ClearInput()
         {std::cin.clear();std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');} //ClearInput
+
+
 
         /**
         * @brief Safely reads user input with EOF detection

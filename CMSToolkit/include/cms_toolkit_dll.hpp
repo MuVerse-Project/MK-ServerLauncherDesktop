@@ -331,6 +331,10 @@ struct Vector
          * @brief Clear terminal screen in Linux or Windows
          */
         CMS_API void ClearScreen();
+        /**
+         * @brief PLM Pause
+         */
+        CMS_API void Pause();
     }
 
     namespace io
@@ -339,6 +343,8 @@ struct Vector
          * @brief Clear input when error was happened
          */
         CMS_API void ClearInput();
+
+
 
         /**
          * @brief Safely reads user input with EOF detection
@@ -368,5 +374,18 @@ struct Vector
         }//SafeInput
     }
 } // namespace cms
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+    CMS_API const char* CMS_GetVersion(void);
+    CMS_API void CMS_Init(void);
+    CMS_API void CMS_ClearScreen(void);
+    CMS_API void CMS_ClearInput(void);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // CMS_UTILS_DLL_HPP
