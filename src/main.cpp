@@ -78,9 +78,7 @@ CMSToolkit : 1.0.5
     window.PushMessageToMainOverview(idk);
 
     MainLogger->info("Window showed");
-
-    std::cout << "CMSToolkit_Ver: " << CMS_Ver << std::endl;
-    std::cout << "CMSToolkit : " << "Included" << std::endl;
+    std::cout << "CMSToolkit_Ver: " << CMS_Ver << std::endl;cms::Init();std::cout << "CMSToolkit : " << "Included" << std::endl;
 
     return app.exec();
 }
