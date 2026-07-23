@@ -2,12 +2,12 @@
  * @file   cms_toolkit_dll.hpp
  * @brief  CMS Cross-platform C++ utility toolkit dll head
  * @author HeZhijun4030
- * @date   2026-05-28
+ * @date   2026-07-23
  */
 #ifndef CMS_UTILS_DLL_HPP
 #define CMS_UTILS_DLL_HPP
 
-#define CMS_Ver "1.0.5"
+#define CMS_Ver "1.1.0"
 
 #ifdef _WIN32
 #ifdef CMS_EXPORTS
@@ -20,7 +20,6 @@
 #endif
 
 #include <iostream>
-#include <limits>
 #include <string>
 #include <chrono>
 
@@ -43,7 +42,7 @@ namespace cms
  * @warning The << and >> operators are overloaded for accumulation, not bit shifting
  * @see Position
  */
-struct Vector
+struct CMS_API Vector
 {
     int x; /**< X coordinate component */
     int y; /**< Y coordinate component */
@@ -332,7 +331,7 @@ struct Vector
          */
         CMS_API void ClearScreen();
         /**
-         * @brief PLM Pause
+         * @brief Cross-platform Pause
          */
         CMS_API void Pause();
     }
@@ -381,6 +380,7 @@ extern "C" {
     CMS_API const char* CMS_GetVersion(void);
     CMS_API void CMS_Init(void);
     CMS_API void CMS_ClearScreen(void);
+    CMS_API void CMS_Pause(void);
     CMS_API void CMS_ClearInput(void);
 
 
