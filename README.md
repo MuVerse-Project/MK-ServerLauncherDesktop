@@ -75,7 +75,5 @@ MK-ServerLauncherDesktop\CodeManStudio\Desktop\src\main.cpp
 - Cmake 3.20.0 (or higher)
 - Qt 6.8.3
 - spdlog (any version)
-~~~ bash
-vcpkg install spdlog
-vcpkg install cryptopp:x64-windows
-~~~
+- cryptopp (any version)
+
