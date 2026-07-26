@@ -51,7 +51,7 @@ qt6_add_executable(${PROJECT_NAME}
         Client.ui
         src/WebSocketManager.hpp
         src/WebSocketManager.cpp
-        Dark/darkstyle.qrc
+
         client_Res.qrc
         src/Hasher.cpp
         src/FileGuy.cpp

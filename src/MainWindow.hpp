@@ -13,9 +13,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include <QFontDatabase>
-
+#include <QPropertyAnimation>
 #include <QWidget>
-
+#include  <QPointer>
 #include "spdlog/spdlog.h"
 #include <memory>
 
@@ -74,7 +74,9 @@ namespace CMS
         void PushMessageToMainOverview(const QString& message);
 
     private:
-        std::shared_ptr<spdlog::logger> logger_;Ui::Form* ui;QString OverviewText;
+        bool m_isAnimating = false;
+        QPointer<QSequentialAnimationGroup> m_tween;
+        std::shared_ptr<spdlog::logger> logger_;std::unique_ptr<Ui::Form> ui;QString OverviewText;
         void setupFonts() const;
     };
 } // namespace CMS

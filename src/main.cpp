@@ -75,10 +75,10 @@ int main(int argc, char* argv[])
 
     const QString idk = R"(# 系统启动
 
-欢迎使用 MK-ServerLauncher
-版本: 其实这只是一个演示版你们知道吗
+欢迎使用 MK-ServerLauncherDesktop
+版本: 0.0.5-Demo
 
-CMSToolkit : 1.0.5
+CMSToolkit : 1.1.0
 
 ## 初始化完成
 )";
