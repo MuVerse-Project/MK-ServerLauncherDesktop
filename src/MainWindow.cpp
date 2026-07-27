@@ -91,7 +91,7 @@ namespace CMS {
 			 });
 
 			 connect(group, &QSequentialAnimationGroup::finished, [this, group]() {
-			 	if (m_tween == group) {  // ✅ 仅一行判断
+			 	if (m_tween == group) {
 					m_tween = nullptr;
 					m_isAnimating = false;
 					group->deleteLater();
