@@ -54,18 +54,20 @@ namespace CMS {
 			file.close();
 		}
 		else {
-			qDebug() << "Failed to load stylesheet:" << file.errorString();
+			logger_->error("Failed to load stylesheet: {}",file.errorString().toStdString());
+
 		}
 
 		connect(buttongroup, QOverload<int>::of(&QButtonGroup::idClicked), this, [this](int id) {
 			if (m_isAnimating || ui->stackedWidget->currentIndex()==id) {
 				return;
 			}
+
 			if (m_tween) {m_tween->stop();
 			m_tween->deleteLater();
 			m_tween = nullptr;}
 			m_isAnimating = true;
-			QWidget *target = ui->stackedWidget;
+			QWidget *target = ui->TweenGuy;
 			QPoint startPos = target->pos();
 			int offset = target->width();
 			QSequentialAnimationGroup *group = new QSequentialAnimationGroup(this);
@@ -88,11 +90,13 @@ namespace CMS {
 			ui->stackedWidget->setCurrentIndex(id);
 			 });
 
-			 // 6. 清理资源
 			 connect(group, &QSequentialAnimationGroup::finished, [this, group]() {
-				 group->deleteLater();
-				 m_tween = nullptr;
-			 	m_isAnimating = false;
+			 	if (m_tween == group) {  // ✅ 仅一行判断
+					m_tween = nullptr;
+					m_isAnimating = false;
+					group->deleteLater();
+				}
+
 			 });
 			m_tween = group;
 			group->start();
@@ -103,7 +107,16 @@ namespace CMS {
 
 	MainWindow::~MainWindow()
 	{
-		logger_->info("Application destoyed success");
+		if (m_tween) {
+			m_tween->stop();
+			m_tween = nullptr;
+		}
+		m_isAnimating = false;
+
+		if (logger_) {
+			logger_->info("Application destroyed successfully");
+		}
+
 
 	}
 

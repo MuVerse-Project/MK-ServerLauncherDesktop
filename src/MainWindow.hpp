@@ -46,17 +46,13 @@ namespace CMS
          * @class MainWindow
          * @brief 应用程序的主窗口类
          *
-         * 继承自 QMainWindow，负责创建和管理应用程序的主界面
-         * UI 界面
-         * spdlog 日志系统
-         * 深色主题样式
-         *
+         * 继承自 QWidget，负责创建和管理应用程序的主界面
          * @note 使用 Ui::Form 类来访问 UI 控件*/
 
     class MainWindow : public QWidget
 
     {
-        Q_OBJECT ///<Qt 元对象宏
+        Q_OBJECT
 
     public:
         /**
