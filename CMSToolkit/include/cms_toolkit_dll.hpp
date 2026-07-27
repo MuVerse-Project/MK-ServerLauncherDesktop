@@ -2,12 +2,12 @@
  * @file   cms_toolkit_dll.hpp
  * @brief  CMS Cross-platform C++ utility toolkit dll head
  * @author HeZhijun4030
- * @date   2026-05-28
+ * @date   2026-07-23
  */
 #ifndef CMS_UTILS_DLL_HPP
 #define CMS_UTILS_DLL_HPP
 
-#define CMS_Ver "1.0.5"
+#define CMS_Ver "1.1.0"
 
 #ifdef _WIN32
 #ifdef CMS_EXPORTS
@@ -20,7 +20,6 @@
 #endif
 
 #include <iostream>
-#include <limits>
 #include <string>
 #include <chrono>
 
@@ -43,7 +42,7 @@ namespace cms
  * @warning The << and >> operators are overloaded for accumulation, not bit shifting
  * @see Position
  */
-struct Vector
+struct CMS_API Vector
 {
     int x; /**< X coordinate component */
     int y; /**< Y coordinate component */
@@ -331,6 +330,10 @@ struct Vector
          * @brief Clear terminal screen in Linux or Windows
          */
         CMS_API void ClearScreen();
+        /**
+         * @brief Cross-platform Pause
+         */
+        CMS_API void Pause();
     }
 
     namespace io
@@ -339,6 +342,8 @@ struct Vector
          * @brief Clear input when error was happened
          */
         CMS_API void ClearInput();
+
+
 
         /**
          * @brief Safely reads user input with EOF detection
@@ -368,5 +373,19 @@ struct Vector
         }//SafeInput
     }
 } // namespace cms
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+    CMS_API const char* CMS_GetVersion(void);
+    CMS_API void CMS_Init(void);
+    CMS_API void CMS_ClearScreen(void);
+    CMS_API void CMS_Pause(void);
+    CMS_API void CMS_ClearInput(void);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // CMS_UTILS_DLL_HPP

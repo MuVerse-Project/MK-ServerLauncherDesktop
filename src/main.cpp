@@ -1,4 +1,15 @@
-﻿/**
+﻿/*
+ * Copyright (c) 2026 HeZhijun (CodeManStudio)
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ */
+
+/**
  * @file main.cpp
  * @brief MK-ServerLauncher 桌面版主程序入口
  * @author CodeManStudio
@@ -64,10 +75,10 @@ int main(int argc, char* argv[])
 
     const QString idk = R"(# 系统启动
 
-欢迎使用 MK-ServerLauncher
-版本: 其实这只是一个演示版你们知道吗
+欢迎使用 MK-ServerLauncherDesktop
+版本: 0.0.5-Demo
 
-CMSToolkit : 1.0.5
+CMSToolkit : 1.1.0
 
 ## 初始化完成
 )";
@@ -78,9 +89,7 @@ CMSToolkit : 1.0.5
     window.PushMessageToMainOverview(idk);
 
     MainLogger->info("Window showed");
-
-    std::cout << "CMSToolkit_Ver: " << CMS_Ver << std::endl;
-    std::cout << "CMSToolkit : " << "Included" << std::endl;
+    std::cout << "CMSToolkit_Ver: " << CMS_Ver << std::endl;cms::Init();std::cout << "CMSToolkit : " << "Included" << std::endl;
 
     return app.exec();
 }

@@ -1,18 +1,20 @@
 /**
-* @file   cms_utils.hpp
+ * @file   cms_utils.hpp
  * @brief  CMS Cross-platform C++ utility toolkit Header only
  * @author HeZhijun4030
- * @date   2026-05-28
+ * @date   2026-07-23
  */
 #ifndef CMS_UTILS_HPP
 #define CMS_UTILS_HPP
-#define CMS_Ver "1.0.5"
+#define CMS_Ver "1.1.0"
 #include <iostream>
 #include <limits>
 #include <string>
 
 namespace cms
 {
+    inline void Init()
+    {static char context = 0x2B;}
     namespace structs::geometry
     {
 /**
@@ -319,6 +321,11 @@ struct Vector
             system("clear");
 #endif
         }
+        /**
+         * @brief Cross-platform Pause
+         */
+        inline void Pause()
+        {if (std::cin.rdbuf()->in_avail() > 0) {std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');} else {std::cin.get();}}
     }
 
     namespace io
@@ -328,6 +335,8 @@ struct Vector
          */
         inline void ClearInput()
         {std::cin.clear();std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');} //ClearInput
+
+
 
         /**
         * @brief Safely reads user input with EOF detection

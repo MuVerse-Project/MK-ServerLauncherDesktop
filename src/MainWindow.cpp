@@ -13,9 +13,11 @@
 #include "ui_Client.h"
 #include "MainWindow.hpp"
 #include <QWidget>
+#include <QEasingCurve>
 #include <QDebug>
 #include <QButtonGroup>
 #include <QFile>
+#include <QSequentialAnimationGroup>
 namespace CMS {
 	/**
 	 * @brief 构造函数实现
@@ -38,38 +40,84 @@ namespace CMS {
 		: QWidget(parent), logger_(logger), ui(new Ui::Form)
 	{
 		setupFonts();
-
-
 		logger_->info("MainWindow Created");
 		setWindowTitle("MK-ServerLauncher Desktop"); ui->setupUi(this);
-
-
 		//TODO(Hzj) : Actually idk what to do
-
 		QButtonGroup* buttongroup = new QButtonGroup(this);
 		buttongroup->addButton(ui->btnOverview, 0);
 		buttongroup->addButton(ui->btnServer, 1);
 		buttongroup->addButton(ui->btnEnvironment, 2);
 		buttongroup->addButton(ui->btnAbout, 3);
-		if (QFile file(":/Dark/darkstyle.qss"); file.open(QFile::ReadOnly)) {
+		if (QFile file(":/res/Dark.qss"); file.open(QFile::ReadOnly)) {
 			const QString styleSheet = QLatin1String(file.readAll());
 			qApp->setStyleSheet(styleSheet);
 			file.close();
 		}
 		else {
-			qDebug() << "Failed to load stylesheet:" << file.errorString();
+			logger_->error("Failed to load stylesheet: {}",file.errorString().toStdString());
+
 		}
 
 		connect(buttongroup, QOverload<int>::of(&QButtonGroup::idClicked), this, [this](int id) {
+			if (m_isAnimating || ui->stackedWidget->currentIndex()==id) {
+				return;
+			}
+
+			if (m_tween) {m_tween->stop();
+			m_tween->deleteLater();
+			m_tween = nullptr;}
+			m_isAnimating = true;
+			QWidget *target = ui->TweenGuy;
+			QPoint startPos = target->pos();
+			int offset = target->width();
+			QSequentialAnimationGroup *group = new QSequentialAnimationGroup(this);
+			QPropertyAnimation *moveOut = new QPropertyAnimation(target, "pos");
+			moveOut->setDuration(250);
+			moveOut->setStartValue(startPos);
+			moveOut->setEndValue(startPos + QPoint(offset, 0));
+			moveOut->setEasingCurve(QEasingCurve::InOutExpo);
+
+
+			QPropertyAnimation *moveIn = new QPropertyAnimation(target, "pos");
+			moveIn->setDuration(250);
+			moveIn->setStartValue(startPos + QPoint(offset, 0));
+			moveIn->setEndValue(startPos);
+			moveIn->setEasingCurve(QEasingCurve::OutExpo);
+
+			group->addAnimation(moveOut);
+			group->addAnimation(moveIn);
+			connect(moveOut, &QPropertyAnimation::finished, [this, id]() {
 			ui->stackedWidget->setCurrentIndex(id);
+			 });
+
+			 connect(group, &QSequentialAnimationGroup::finished, [this, group]() {
+			 	if (m_tween == group) {
+					m_tween = nullptr;
+					m_isAnimating = false;
+					group->deleteLater();
+				}
+
+			 });
+			m_tween = group;
+			group->start();
 
 			});
+
 	}
 
 	MainWindow::~MainWindow()
 	{
-		logger_->info("Application destoyed success");
-		delete ui;
+		if (m_tween) {
+			m_tween->stop();
+			m_tween = nullptr;
+		}
+		m_isAnimating = false;
+
+		if (logger_) {
+			logger_->info("Application destroyed successfully");
+		}
+
+
 	}
 
 	void MainWindow::setupFonts() const
