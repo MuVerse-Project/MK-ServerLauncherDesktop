@@ -42,6 +42,8 @@ namespace CMS {
 		setupFonts();
 		logger_->info("MainWindow Created");
 		setWindowTitle("MK-ServerLauncher Desktop"); ui->setupUi(this);
+		ui->envTableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+		ui->simple->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 		//TODO(Hzj) : Actually idk what to do
 		QButtonGroup* buttongroup = new QButtonGroup(this);
 		buttongroup->addButton(ui->btnOverview, 0);
