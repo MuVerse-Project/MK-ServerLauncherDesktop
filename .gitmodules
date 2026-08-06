@@ -2,3 +2,12 @@
 	path = MuCloud/MKSL
 	url = https://github.com/MuVerse-Project/MK-ServerLauncher.git
 	branch = dev
+[submodule "sublib/hwinfo"]
+	path = sublib/hwinfo
+	url = https://github.com/lfreist/hwinfo.git
+	branch = main
+[submodule "sublib/yaml-cpp"]
+    path = sublib/yaml-cpp
+    url = https://github.com/jbeder/yaml-cpp.git
+    branch = main
+
