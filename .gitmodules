@@ -1,3 +1,4 @@
 [submodule "MuCloud/MKSL"]
 	path = MuCloud/MKSL
 	url = https://github.com/MuVerse-Project/MK-ServerLauncher.git
+	branch = dev
