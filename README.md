@@ -11,15 +11,15 @@
 
 <div align="center">
 <img alt="Static Badge" src="https://img.shields.io/badge/Ktor-3.4.0-gray?style=flat&logo=ktor&logoColor=white&labelColor=purple">
-<img alt="Static Badge" src="https://img.shields.io/badge/Vue-3.5.33-gray?style=flat&logo=vue.js&logoColor=white&labelColor=darkgreen">
-<img alt="Static Badge" src="https://img.shields.io/badge/TailwindCSS-4.2.4-gray?style=flat&logo=tailwindcss&logoColor=white&labelColor=blue">
-<img alt="Static Badge" src="https://img.shields.io/badge/ElementPlus-2.13.7-gray?style=flat&logoColor=white&labelColor=blue">
+<img alt="Static Badge" src="https://img.shields.io/badge/Vue-V3-gray?style=flat&logo=vue.js&logoColor=white&labelColor=darkgreen">
+<img alt="Static Badge" src="https://img.shields.io/badge/TailwindCSS-V4-gray?style=flat&logo=tailwindcss&logoColor=white&labelColor=blue">
+<img alt="Static Badge" src="https://img.shields.io/badge/ShadcnVue-V2-gray?style=flat&logo=shadcnui&logoColor=white&labelColor=black">
 </div><br/>
 
 ---
 
 <div align="center">
-<a href="https://mucloudofficial.github.io/MuCloudProjectDoc/mksl-main.html">&gt;&gt;&gt; 项目文档 &lt;&lt;&lt;</a>
+<a href="https://mucloudofficial.github.io/MuCloudProjectDoc/mksl-main.html">&gt;&gt;&gt; 项目文档（制作中版本） &lt;&lt;&lt;</a>
 </div>
 
 ---
@@ -29,17 +29,16 @@
 
 ---
 
-## 关于该项目的后续路线 | About Project  
+## 关于该项目的后续路线 | About Project
 基于当前的开发进度 ~其实是我脑死了~   
-MK-ServerLauncher 项目将只专注于基于 Ktor 的全平台实现，且仅对于 Minecraft Dedicated Server 进行开发  
-原有的 DPE 模块与 GenericPlatform_V1 分支将被取消并清除  
-届时会有新项目代替 DPE（桌面版本），GPE（通用化版本）用于将其桌面化或通用化以使其支持更多其他游戏的 Dedicated Server  
-
+[MK-ServerLauncher](https://github.com/MuVerse-Project/MK-ServerLauncher) 项目将只专注于基于 Ktor 的全平台实现，且仅对于 Minecraft Dedicated Server 进行开发  
+DPE（桌面版本）项目可以移步至 [MK-ServerLauncherDesktop](https://github.com/MuVerse-Project/MK-ServerLauncherDesktop) 项目  
+GPE（通用化版本）项目请期待 [MK-ServerLauncherPro](https://www.bilibili.com/video/BV1GJ411x7h7) 项目
 ---
 
 <div align="center">
   
-# CodeManStudio
+# CodeManStudio (Now part of MuVerse)
 <img alt="Static Badge" src="https://img.shields.io/badge/Qt-6.8.3-gray?style=flat&logo=qt&logoColor=green&labelColor=blue">
 </div><br/>
 
@@ -76,4 +75,6 @@ MK-ServerLauncherDesktop\CodeManStudio\Desktop\src\main.cpp
 - Qt 6.8.3
 - spdlog (any version)
 - cryptopp (any version)
+- yaml-cpp (sublib)
+- hwinfo (sublib)
 
