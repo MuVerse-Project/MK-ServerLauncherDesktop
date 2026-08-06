@@ -2,13 +2,8 @@
 #ifndef CMS_FILEGUY_H
 #define CMS_FILEGUY_H
 
-#include <iostream>
-#include <filesystem>
-#include <fstream>
-#include <nlohmann/json.hpp>
-#include <spdlog/logger.h>
-#include <yaml-cpp/yaml.h>
-#include "Hasher.hpp"
+#include "HolyHead.hpp"
+
 namespace CMS{
 class FileManager
 {

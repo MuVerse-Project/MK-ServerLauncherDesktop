@@ -12,12 +12,7 @@
 
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#include <QFontDatabase>
-#include <QPropertyAnimation>
-#include <QWidget>
-#include  <QPointer>
-#include "spdlog/spdlog.h"
-#include <memory>
+#include "HolyHead.hpp"
 
 QT_BEGIN_NAMESPACE
 /**

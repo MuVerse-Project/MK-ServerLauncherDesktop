@@ -32,17 +32,19 @@ find_package(cryptopp REQUIRED CONFIG)
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets WebSockets)
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR})
 qt6_add_executable(${PROJECT_NAME}
+        src/HolyHead.hpp
         src/main.cpp
         src/MainWindow.cpp
         src/MainWindow.hpp
         Client.ui
-        src/WebSocketManager.hpp
-        src/WebSocketManager.cpp
+        src/NetWork/WebSocketManager.hpp
+        src/NetWork/WebSocketManager.cpp
 
         client_Res.qrc
         src/Hasher.cpp
         src/FileGuy.cpp
         src/FileGuy.hpp
+        src/ISEEU.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

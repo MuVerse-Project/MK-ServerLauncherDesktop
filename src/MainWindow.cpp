@@ -1,4 +1,5 @@
-﻿/**
+﻿#include "MainWindow.hpp"
+/**
  * @file MainWindow.cpp
  * @brief MK-ServerLauncher 桌面版主窗口实现文件
  * @author CodeManStudio
@@ -10,14 +11,7 @@
  * 包括窗口初始化、日志设置和资源清理等功能
 */
 
-#include "ui_Client.h"
-#include "MainWindow.hpp"
-#include <QWidget>
-#include <QEasingCurve>
-#include <QDebug>
-#include <QButtonGroup>
-#include <QFile>
-#include <QSequentialAnimationGroup>
+
 namespace CMS {
 	/**
 	 * @brief 构造函数实现

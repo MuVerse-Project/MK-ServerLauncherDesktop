@@ -21,15 +21,7 @@
  * 设置日志系统和创建主窗口。
  */
 
-#include <iostream>
-#include <cms_toolkit_dll.hpp>
-#include <filesystem>
-#include <QApplication>
-#include "MainWindow.hpp"
-#include "spdlog/sinks/stdout_color_sinks.h"
-#include "spdlog/sinks/rotating_file_sink.h"
-#include "WebSocketManager.hpp"
-#include "FileGuy.hpp"
+#include "HolyHead.hpp"
 /**
  * @brief 应用程序入口点
  *
@@ -53,11 +45,10 @@ int main(int argc, char* argv[])
     const auto MainLogger = spdlog::stdout_color_mt("main");
     const std::filesystem::path ExeDir=std::filesystem::path(argv[0]).parent_path();
     CMS::FileManager FileGay(MainLogger,ExeDir);
-    const auto file_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
+    const auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(
         FileGay.GetLogFilePath().string(),
-        1024 * 1024 * 10,
-        3
-        );
+        true
+    );
     serverLogger->sinks().push_back(file_sink);
     clientLogger->sinks().push_back(file_sink);
     MainLogger->sinks().push_back(file_sink);
@@ -70,7 +61,7 @@ int main(int argc, char* argv[])
     //父窗口为nullptr，表示这是一个顶级窗口
     CMS::MainWindow window(nullptr, MainLogger);
 
-    CMS::WebSocketManager wsManager(&window, 20038, "127.0.0.1", 4030, "/api/v1/overview", serverLogger, clientLogger);
+    CMS::WebSocketBase wsManager(&window, 20038,"/api/v1/overview", clientLogger);
     window.show();
 
     const QString idk = R"(# 系统启动
