@@ -1,0 +1,11 @@
+{
+  "name": "cms",
+  "version": "1.0.0",
+  "dependencies": [
+    "spdlog",
+    "cryptopp",
+    "boost-process"
+
+  ],
+  "builtin-baseline": "17f35ad2418007a895ced8a4cece4ab34068a58d"
+}

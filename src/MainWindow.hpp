@@ -12,12 +12,9 @@
 
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#include <QFontDatabase>
-#include <QPropertyAnimation>
-#include <QWidget>
-#include  <QPointer>
-#include "spdlog/spdlog.h"
-#include <memory>
+#include "NetWork/WebSocketManager.hpp"
+#include "HolyHead.hpp"
+
 
 QT_BEGIN_NAMESPACE
 /**
@@ -67,12 +64,21 @@ namespace CMS
         * @see setupLogger()
         */
         explicit MainWindow(QWidget* parent = nullptr, const std::shared_ptr<spdlog::logger>& logger = nullptr);~MainWindow() override;
-        void PushMessageToMainOverview(const QString& message);
+        void PushMessageToMainOverview(const std::string_view message);
+        std::unique_ptr<Ui::Form> ui;
+        std::shared_ptr<CMS::WebSocketBase> wsManager;
+        signals:
+        void OverviewMessageReceived(const std::string& msg);
+
+    public slots:
+// 这个槽函数专门用于接收子进程输出
+    void onProcessOutput(const std::string& msg);
 
     private:
+
         bool m_isAnimating = false;
         QPointer<QSequentialAnimationGroup> m_tween;
-        std::shared_ptr<spdlog::logger> logger_;std::unique_ptr<Ui::Form> ui;QString OverviewText;
+        std::shared_ptr<spdlog::logger> logger_;QString OverviewText;
         void setupFonts() const;
     };
 } // namespace CMS

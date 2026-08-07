@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMSUTILS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/CMSToolkit")
-set(YAML_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+
 add_library(CMSUtils SHARED IMPORTED)
 
 set_target_properties(CMSUtils PROPERTIES
@@ -20,22 +20,9 @@ set_target_properties(CMSUtils PROPERTIES
         INTERFACE_INCLUDE_DIRECTORIES "${CMSUTILS_DIR}/include"
 )
 
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(YAML_LIBRARY "${YAML_DIR}/lib/yaml-cppd.lib")
-    set(YAML_DLL "${YAML_DIR}/bin/yaml-cppd.dll")
-else()
-    set(YAML_LIBRARY "${YAML_DIR}/lib/yaml-cpp.lib")
-    set(YAML_DLL "${YAML_DIR}/bin/yaml-cpp.dll")
-endif()
 
-add_library(yaml-cpp SHARED IMPORTED)
-
-set_target_properties(yaml-cpp PROPERTIES
-        IMPORTED_LOCATION "${YAML_DLL}"
-        IMPORTED_IMPLIB   "${YAML_LIBRARY}"
-        INTERFACE_INCLUDE_DIRECTORIES "${YAML_DIR}/include"
-)
-
+add_subdirectory(sublib/yaml-cpp)
+add_subdirectory(sublib/hwinfo)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
@@ -43,19 +30,27 @@ set(CMAKE_AUTORCC ON)
 find_package(spdlog REQUIRED CONFIG)
 find_package(cryptopp REQUIRED CONFIG)
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets WebSockets)
+find_package(Boost REQUIRED COMPONENTS
+        asio
+        system
+        process
+
+)
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR})
 qt6_add_executable(${PROJECT_NAME}
+        src/HolyHead.hpp
         src/main.cpp
         src/MainWindow.cpp
         src/MainWindow.hpp
         Client.ui
-        src/WebSocketManager.hpp
-        src/WebSocketManager.cpp
+        src/NetWork/WebSocketManager.hpp
+        src/NetWork/WebSocketManager.cpp
 
         client_Res.qrc
         src/Hasher.cpp
         src/FileGuy.cpp
         src/FileGuy.hpp
+        src/ISEEU.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
@@ -65,7 +60,9 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         spdlog::spdlog
         cryptopp::cryptopp
         CMSUtils
-        yaml-cpp
+        yaml-cpp::yaml-cpp
+        lfreist-hwinfo::hwinfo
+        Boost::process
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
