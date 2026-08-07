@@ -4,7 +4,7 @@
  * @brief MK-ServerLauncher 桌面版主窗口实现文件
  * @author CodeManStudio
  * @version 1.0.0
- * @date 2026-02-28
+ * @date 2026-08-7
  *
  * @details
  * 实现了 MainWindow 类的所有成员函数

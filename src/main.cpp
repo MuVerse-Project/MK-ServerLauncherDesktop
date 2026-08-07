@@ -14,7 +14,7 @@
  * @brief MK-ServerLauncher 桌面版主程序入口
  * @author CodeManStudio
  * @version ?
- * @date 2026-02-28
+ * @date 2026-08-7
  *
  * @details
  * 该文件是应用程序的入口点，负责初始化Qt环境、
@@ -66,10 +66,11 @@ int main(int argc, char* argv[])
     MainLogger->info("Creating pipe...");
     boost::asio::readable_pipe pipe_out{ctx};
     MainLogger->info("Creating process...");
-    auto java_path = proc::environment::find_executable("java");
+
+
     proc::process p(
     ctx,
-    java_path.string(),
+    FileGay.InitJava(),
     {"-jar", (ExeDir/"MuView-all.jar").string()},
     proc::process_stdio{{},pipe_out,{}});
     MainLogger->info("Process created, checking running status...");
@@ -83,7 +84,7 @@ int main(int argc, char* argv[])
 
     app.setApplicationName("MK-ServerLauncher Desktop");
     app.setOrganizationName("MuVerse / CodeManStudio");
-    app.setApplicationVersion("26.1.0-beta");
+    app.setApplicationVersion("26.5.1-beta");
 
 
     //创建主窗口实例，传入日志器
@@ -96,7 +97,7 @@ int main(int argc, char* argv[])
     const std::string idk = R"(# 系统启动
 
 欢迎使用 MK-ServerLauncherDesktop
-版本: 0.0.5-Demo
+版本: MKSL-D-26.5.1-beta
 
 CMSToolkit : 1.1.0
 
