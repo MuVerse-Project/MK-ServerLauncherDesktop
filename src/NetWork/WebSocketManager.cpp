@@ -4,38 +4,37 @@
 
 namespace CMS
 {
+    QUrl APIPOINT::buildUrl(const std::string_view path)
+    {
+        QUrl Tmp;
+        Tmp.setScheme("ws");
+        Tmp.setHost("127.0.0.1");
+        Tmp.setPort(20038);
+        Tmp.setPath(QString::fromUtf8(path.data(), static_cast<int>(path.size())));
+
+        return std::move(Tmp);
+    }
+
+
     WebSocketBase::WebSocketBase(
         QObject* parent,
         const int& Targetport,
-        const QString& path,
         const std::shared_ptr<spdlog::logger>& ClientLogger):
         QObject(parent),
         client_(nullptr),
         Cur_WebSocketState_Client(WebSocketState_Client::Client_None),
         ClientLogger_(ClientLogger)
     {
-        Muurl.setScheme("ws");
-        Muurl.setHost("127.0.0.1");
-        Muurl.setPort(Targetport);
-        Muurl.setPath(path);
         QString LoServerName = "CMS";
 
         client_ = new QWebSocket();
         client_->setParent(this);
-        if (!Muurl.isValid())
-        {
-            ClientLogger_->error("Invalid URL: {}", Muurl.toString().toStdString());
-            Cur_WebSocketState_Client = WebSocketState_Client::Client_Error;
-            //TODO 重连
-            return;
-        }
-        ClientLogger_->info("Valid URL: {}", Muurl.toString().toStdString());
-        client_->open(Muurl);
-        Cur_WebSocketState_Client = WebSocketState_Client::Client_Connecting;
-        ClientLogger_->info("Connecting to {}", Muurl.toString().toStdString());
+
+
         connect(client_, &QWebSocket::connected, this, &WebSocketBase::OnConnectedToServer);
         connect(client_, &QWebSocket::disconnected, this, &WebSocketBase::OnDisconnectedFromServer);
         connect(client_, &QWebSocket::textMessageReceived, this, &WebSocketBase::MessageFromServer);
+        client_->open(APIPOINT::buildUrl(APIPOINT::OVERVIEW));
     }
     WebSocketBase::~WebSocketBase(){if (client_) {client_->close();client_->deleteLater();client_ = nullptr;}}
 
@@ -49,6 +48,8 @@ namespace CMS
         ClientLogger_->info("Peer port: " + QString::number(client_->peerPort()).toStdString());
         ClientLogger_->info("Local address: " + client_->localAddress().toString().toStdString());
         ClientLogger_->info("Local port: " + QString::number(client_->localPort()).toStdString());
+
+
     }
 
     void WebSocketBase::OnDisconnectedFromServer() const
@@ -61,6 +62,7 @@ namespace CMS
     {
         ClientLogger_->info("=== Message From Server ===");
         ClientLogger_->info("{}", message.toStdString());
+        HandleMon(message.toStdString());
 
     }
 

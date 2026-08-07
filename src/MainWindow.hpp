@@ -12,7 +12,9 @@
 
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+#include "NetWork/WebSocketManager.hpp"
 #include "HolyHead.hpp"
+
 
 QT_BEGIN_NAMESPACE
 /**
@@ -63,11 +65,12 @@ namespace CMS
         */
         explicit MainWindow(QWidget* parent = nullptr, const std::shared_ptr<spdlog::logger>& logger = nullptr);~MainWindow() override;
         void PushMessageToMainOverview(const QString& message);
-
+        std::unique_ptr<Ui::Form> ui;
     private:
+        std::shared_ptr<CMS::WebSocketBase> wsManager;
         bool m_isAnimating = false;
         QPointer<QSequentialAnimationGroup> m_tween;
-        std::shared_ptr<spdlog::logger> logger_;std::unique_ptr<Ui::Form> ui;QString OverviewText;
+        std::shared_ptr<spdlog::logger> logger_;QString OverviewText;
         void setupFonts() const;
     };
 } // namespace CMS

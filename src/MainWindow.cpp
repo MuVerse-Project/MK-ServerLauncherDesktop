@@ -33,6 +33,10 @@ namespace CMS {
 	MainWindow::MainWindow(QWidget* parent, const std::shared_ptr<spdlog::logger>& logger)
 		: QWidget(parent), logger_(logger), ui(new Ui::Form)
 	{
+
+		wsManager = std::make_shared<WebSocketBase>(this,20038,logger_);
+
+
 		setupFonts();
 		logger_->info("MainWindow Created");
 		setWindowTitle("MK-ServerLauncher Desktop"); ui->setupUi(this);
@@ -97,7 +101,18 @@ namespace CMS {
 			m_tween = group;
 			group->start();
 
+
 			});
+		connect(wsManager.get(),&WebSocketBase::systemStatusUpdated,this,[this](int cpu, int mem, int totalServer,
+							 int onlineServer, int offlineServer)
+		{
+			ui->CPUPro->setValue(cpu);ui->MemPro->setValue(mem);
+			//TODO 没必要一直刷新这个
+			ui->simple->setItem(0, 1, new QTableWidgetItem(std::move(QString::number(onlineServer))));
+			ui->simple->setItem(0, 2, new QTableWidgetItem(std::move(QString::number(offlineServer))));
+			ui->simple->setItem(0, 3, new QTableWidgetItem(std::move(QString::number(totalServer))));
+
+		});
 
 	}
 

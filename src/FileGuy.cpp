@@ -2,6 +2,8 @@
 
 #include "FileGuy.hpp"
 
+#include "Hasher.hpp"
+
 CMS::FileManager::FileManager(const std::shared_ptr<spdlog::logger>& logger, const std::filesystem::path& ExeDir):logger_(logger)
 {
 

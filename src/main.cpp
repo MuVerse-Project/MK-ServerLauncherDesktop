@@ -21,7 +21,9 @@
  * 设置日志系统和创建主窗口。
  */
 
+#include "FileGuy.hpp"
 #include "HolyHead.hpp"
+#include "MainWindow.hpp"
 /**
  * @brief 应用程序入口点
  *
@@ -61,7 +63,7 @@ int main(int argc, char* argv[])
     //父窗口为nullptr，表示这是一个顶级窗口
     CMS::MainWindow window(nullptr, MainLogger);
 
-    CMS::WebSocketBase wsManager(&window, 20038,"/api/v1/overview", clientLogger);
+
     window.show();
 
     const QString idk = R"(# 系统启动

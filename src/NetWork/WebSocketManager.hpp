@@ -4,6 +4,40 @@
 
 namespace CMS
 {
+
+
+
+
+
+
+
+
+    struct APIPOINT
+    {
+        static constexpr const char* ENV_CREATE = "/api/v1/env/create";
+        static constexpr const char* ENV_DELETE = "/api/v1/env/delete";
+        static constexpr const char* ENV_LIST = "/api/v1/env/list";
+
+        static constexpr const char* SERVER_AVAILABLE_TYPE = "/api/v1/server/availableType";
+        static constexpr const char* SERVER_CREATE = "/api/v1/server/create";
+        static constexpr const char* SERVER_DELETE = "/api/v1/server/delete";
+        static constexpr const char* SERVER_FORCESTOP = "/api/v1/server/forcestop";
+        static constexpr const char* SERVER_IMPORT = "/api/v1/server/import";
+        static constexpr const char* SERVER_LIST = "/api/v1/server/list";
+        static constexpr const char* SERVER_REMOVE = "/api/v1/server/remove";
+        static constexpr const char* SERVER_START = "/api/v1/server/start";
+        static constexpr const char* SERVER_STOP = "/api/v1/server/stop";
+
+        static constexpr const char* OVERVIEW = "/api/v1/overview";
+        static constexpr const char* MUCLOSE = "/muclose";
+
+        static QUrl buildUrl(const std::string_view path);
+    private:
+
+    };
+
+
+
     class WebSocketBase : public QObject
     {
         Q_OBJECT
@@ -11,10 +45,16 @@ namespace CMS
         explicit WebSocketBase(
             QObject* parent,
             const int& Targetport,
-            const QString& path,
             const std::shared_ptr<spdlog::logger>& ClientLogger
         );
         ~WebSocketBase() override;
+
+
+    signals:
+
+    void systemStatusUpdated(int cpu, int mem, int totalServer,
+                             int onlineServer, int offlineServer) const;
+
     protected slots:
         // Client slots
         virtual void OnConnectedToServer();
@@ -22,6 +62,20 @@ namespace CMS
         virtual void OnDisconnectedFromServer() const;
         virtual void MessageFromServer(const QString& message) const;
     protected:
+        void HandleMon(const std::string_view msg) const
+        {
+            nlohmann::json j = nlohmann::json::parse(msg);
+
+            emit systemStatusUpdated(
+                static_cast<int>(j["systemStatus"]["CpuUsage"].get<double>()),
+                static_cast<int>(j["systemStatus"]["MemUsage"].get<double>()),
+                j["serverStatus"]["totalServer"].get<int>(),
+                j["serverStatus"]["onlineServer"].get<int>(),
+                j["serverStatus"]["offlineServer"].get<int>()
+                );
+        }
+
+
         //WebSocket.kt
         enum ApiWithArg
         {
@@ -34,7 +88,7 @@ namespace CMS
         };
 
         QWebSocket* client_;
-        QUrl Muurl;
+
         enum WebSocketState_Client
         {
             Client_None, //默认
