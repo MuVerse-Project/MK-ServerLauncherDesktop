@@ -49,6 +49,11 @@ namespace CMS
         );
         ~WebSocketBase() override;
 
+        inline void Start()
+        {
+            client_->open(APIPOINT::buildUrl(APIPOINT::OVERVIEW));
+        }
+
 
     signals:
 

@@ -33,6 +33,7 @@ find_package(Qt6 REQUIRED COMPONENTS Core Widgets WebSockets)
 find_package(Boost REQUIRED COMPONENTS
         asio
         system
+        process
 
 )
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR})
@@ -61,7 +62,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         CMSUtils
         yaml-cpp::yaml-cpp
         lfreist-hwinfo::hwinfo
-        Boost::boost
+        Boost::process
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

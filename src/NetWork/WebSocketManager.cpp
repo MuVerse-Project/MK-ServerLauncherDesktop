@@ -34,7 +34,7 @@ namespace CMS
         connect(client_, &QWebSocket::connected, this, &WebSocketBase::OnConnectedToServer);
         connect(client_, &QWebSocket::disconnected, this, &WebSocketBase::OnDisconnectedFromServer);
         connect(client_, &QWebSocket::textMessageReceived, this, &WebSocketBase::MessageFromServer);
-        client_->open(APIPOINT::buildUrl(APIPOINT::OVERVIEW));
+
     }
     WebSocketBase::~WebSocketBase(){if (client_) {client_->close();client_->deleteLater();client_ = nullptr;}}
 
@@ -60,8 +60,6 @@ namespace CMS
 
     void WebSocketBase::MessageFromServer(const QString& message) const
     {
-        ClientLogger_->info("=== Message From Server ===");
-        ClientLogger_->info("{}", message.toStdString());
         HandleMon(message.toStdString());
 
     }

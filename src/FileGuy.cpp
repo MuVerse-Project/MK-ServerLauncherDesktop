@@ -33,10 +33,18 @@ CMS::FileManager::FileManager(const std::shared_ptr<spdlog::logger>& logger, con
     SetDir_=setdir;
     ExeDir_=ExeDir;
     logger_->info("Setted log dir and Settings.json \n{}\n{}",LogDir_.string(),SetDir_.string());
+    MuDir_=ExeDir_/"MuView-all.jar";
+
+
 }
 
 std::filesystem::path CMS::FileManager::GetLogFilePath() const
 {
     return LogDir_/"App.log";
+}
+
+bool CMS::FileManager::CheckMu() const
+{
+    return std::filesystem::exists(MuDir_);
 }
 

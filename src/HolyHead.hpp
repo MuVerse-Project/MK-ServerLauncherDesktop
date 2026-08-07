@@ -1,7 +1,9 @@
 // HolyHead.hpp
 #ifndef HOLYHEAD_H
 #define HOLYHEAD_H
-
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
 // ==================== C++标准库（最先包含） ====================
 #include <iostream>
 #include <fstream>
@@ -12,7 +14,10 @@
 
 // ==================== 第三方库 ====================
 //Boost
-#include <boost/pro>
+#include <boost/asio.hpp>
+#include <boost/process/v2/process.hpp>
+#include <boost/process/v2/stdio.hpp>
+#include <boost/process/v2/environment.hpp>
 
 
 // 日志库（在 FileGuy 之前包含）
@@ -36,7 +41,7 @@
 #include <nlohmann/json.hpp>
 
 // 硬件信息
-#include <hwinfo/disk.h>
+
 
 // ==================== Qt库 ====================
 #include <QObject>
@@ -52,6 +57,8 @@
 #include <QDebug>
 #include <QtWebSockets/QWebSocket>
 #include <QtWebSockets/QWebSocketServer>
+#include <QThread>
+#include <QGraphicsOpacityEffect>
 
 // ==================== 项目头文件（最后包含） ====================
 // 注意：这些文件依赖于上面的头文件

@@ -59,61 +59,64 @@ namespace CMS {
 		}
 
 		connect(buttongroup, QOverload<int>::of(&QButtonGroup::idClicked), this, [this](int id) {
-			if (m_isAnimating || ui->stackedWidget->currentIndex()==id) {
-				return;
-			}
+	if (m_isAnimating || ui->stackedWidget->currentIndex() == id) {
+		return;
+	}
 
-			if (m_tween) {m_tween->stop();
-			m_tween->deleteLater();
-			m_tween = nullptr;}
-			m_isAnimating = true;
-			QWidget *target = ui->TweenGuy;
-			QPoint startPos = target->pos();
-			int offset = target->width();
-			QSequentialAnimationGroup *group = new QSequentialAnimationGroup(this);
-			QPropertyAnimation *moveOut = new QPropertyAnimation(target, "pos");
-			moveOut->setDuration(250);
-			moveOut->setStartValue(startPos);
-			moveOut->setEndValue(startPos + QPoint(offset, 0));
-			moveOut->setEasingCurve(QEasingCurve::InOutExpo);
+	m_isAnimating = true;
 
+	QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect(ui->TweenGuy);
+	ui->TweenGuy->setGraphicsEffect(effect);
 
-			QPropertyAnimation *moveIn = new QPropertyAnimation(target, "pos");
-			moveIn->setDuration(250);
-			moveIn->setStartValue(startPos + QPoint(offset, 0));
-			moveIn->setEndValue(startPos);
-			moveIn->setEasingCurve(QEasingCurve::OutExpo);
+	QSequentialAnimationGroup *group = new QSequentialAnimationGroup(this);
+	QPropertyAnimation *fadeOut = new QPropertyAnimation(effect, "opacity");
+	fadeOut->setDuration(100);
+	fadeOut->setStartValue(1.0);
+	fadeOut->setEndValue(0.0);
+	fadeOut->setEasingCurve(QEasingCurve::InOutQuad);
 
-			group->addAnimation(moveOut);
-			group->addAnimation(moveIn);
-			connect(moveOut, &QPropertyAnimation::finished, [this, id]() {
-			ui->stackedWidget->setCurrentIndex(id);
-			 });
+	QPropertyAnimation *fadeIn = new QPropertyAnimation(effect, "opacity");
+	fadeIn->setDuration(100);
+	fadeIn->setStartValue(0.0);
+	fadeIn->setEndValue(1.0);
+	fadeIn->setEasingCurve(QEasingCurve::InOutQuad);
 
-			 connect(group, &QSequentialAnimationGroup::finished, [this, group]() {
-			 	if (m_tween == group) {
-					m_tween = nullptr;
-					m_isAnimating = false;
-					group->deleteLater();
-				}
+	group->addAnimation(fadeOut);
+	group->addAnimation(fadeIn);
 
-			 });
-			m_tween = group;
-			group->start();
+	connect(fadeOut, &QPropertyAnimation::finished, [this, id]() {
+		ui->stackedWidget->setCurrentIndex(id);
+	});
 
+	connect(group, &QSequentialAnimationGroup::finished, [this, group]() {
+		m_isAnimating = false;
+		if (m_tween == group) {
+			m_tween = nullptr;
+		}
+		group->deleteLater();
+	});
 
-			});
+	m_tween = group;
+	group->start();
+});
 		connect(wsManager.get(),&WebSocketBase::systemStatusUpdated,this,[this](int cpu, int mem, int totalServer,
 							 int onlineServer, int offlineServer)
 		{
 			ui->CPUPro->setValue(cpu);ui->MemPro->setValue(mem);
 			//TODO 没必要一直刷新这个
-			ui->simple->setItem(0, 1, new QTableWidgetItem(std::move(QString::number(onlineServer))));
-			ui->simple->setItem(0, 2, new QTableWidgetItem(std::move(QString::number(offlineServer))));
-			ui->simple->setItem(0, 3, new QTableWidgetItem(std::move(QString::number(totalServer))));
+			ui->simple->setItem(0, 0, new QTableWidgetItem(std::move(QString::number(onlineServer))));
+			ui->simple->setItem(0, 1, new QTableWidgetItem(std::move(QString::number(offlineServer))));
+			ui->simple->setItem(0, 2, new QTableWidgetItem(std::move(QString::number(totalServer))));
 
 		});
+		connect(this,&MainWindow::OverviewMessageReceived,this,&MainWindow::onProcessOutput,
+			Qt::QueuedConnection);
 
+	}
+
+	void MainWindow::onProcessOutput(const std::string& msg)
+	{
+		PushMessageToMainOverview(msg);
 	}
 
 	MainWindow::~MainWindow()
@@ -172,9 +175,9 @@ namespace CMS {
 			}
 		}
 	}
-	void MainWindow::PushMessageToMainOverview(const QString& message) {
+	void MainWindow::PushMessageToMainOverview(const std::string_view message) {
 		if (!OverviewText.isEmpty()) { OverviewText += "\n\n"; }
-		OverviewText += message;
+		OverviewText += QString::fromStdString(message.data());
 		ui->textEdit->setMarkdown(OverviewText);
 	}
 } // namespace CMS
