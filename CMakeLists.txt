@@ -30,6 +30,11 @@ set(CMAKE_AUTORCC ON)
 find_package(spdlog REQUIRED CONFIG)
 find_package(cryptopp REQUIRED CONFIG)
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets WebSockets)
+find_package(Boost REQUIRED COMPONENTS
+        asio
+        system
+
+)
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR})
 qt6_add_executable(${PROJECT_NAME}
         src/HolyHead.hpp
@@ -56,6 +61,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         CMSUtils
         yaml-cpp::yaml-cpp
         lfreist-hwinfo::hwinfo
+        Boost::boost
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

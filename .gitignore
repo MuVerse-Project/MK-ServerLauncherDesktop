@@ -54,6 +54,7 @@ bin/
 
 
 ### CodeManStudio ###
+vcpkg_installed/
 out/
 build/
 *-build/
