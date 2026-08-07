@@ -39,7 +39,7 @@ CMS::FileManager::FileManager(const std::shared_ptr<spdlog::logger>& logger, con
     logger_->info(j_.dump(4));
     MuDir_=ExeDir_/"MuView-all.jar";
 
-    JavaDir_=boost::process::environment::find_executable("java").string();;
+    JavaDir_=boost::process::environment::find_executable("java.exe").string();
 
 
 
@@ -51,8 +51,7 @@ CMS::FileManager::FileManager(const std::shared_ptr<spdlog::logger>& logger, con
 std::string CMS::FileManager::InitJava()
 {
     std::string tmp;
-    if (!std::filesystem::exists(JavaDir_))
-    {
+
         if (!j_.contains("JavaDir"))
         {
             std::cout <<"\nCouldn't find the java pls input a dir to save it\n";
@@ -68,8 +67,7 @@ std::string CMS::FileManager::InitJava()
             std::fstream File;File.open(SetDir_,std::ios::out);File << j_.dump(4);File.close();
         }
         else{return j_["JavaDir"];}
-    }
-    else{return j_["JavaDir"];}
+
     return tmp;
 }
 
