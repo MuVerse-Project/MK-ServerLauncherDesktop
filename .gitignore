@@ -32,7 +32,7 @@ out/
 .settings
 .springBeans
 .sts4-cache
-bin/
+
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
@@ -85,8 +85,7 @@ ui_*.h
 
 *.exe
 *.exe.manifest
-*.dll
-*.lib
+
 *.pdb
 *.ilk
 *.exp
